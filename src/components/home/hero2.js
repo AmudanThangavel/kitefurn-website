@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import CrossfadeLoop from "../utils/fadeLoop.js";
+import { HashLink } from "react-router-hash-link";
+import navIds from "../customInteriors/navIds.js";
 
 import stairs from "../../media/images/home/stairs/stairs3.png";
 import stairs2 from "../../media/images/home/stairs/stairs4.png";
@@ -46,9 +48,9 @@ class Hero2 extends Component {
               <div>DURABLE</div>
             </div>
 
-            <Link to="/customInteriors/#glassStairs">
+            <HashLink to={navIds.stairs}>
               <button className="btn btn-light btn-stairs">View More</button>
-            </Link>
+            </HashLink>
           </div>
 
           <div className="stair-text-content">
@@ -79,9 +81,9 @@ class Hero2 extends Component {
             </div>
             <div className="bed-text-subtop">Sleep on and store in</div>
 
-            <Link to="customInteriors/#residence">
+            {/* <Link to="customInteriors/#residence">
               <button className="btn btn-light btn-bed">Explore</button>
-            </Link>
+            </Link> */}
           </div>
 
           <CrossfadeLoop

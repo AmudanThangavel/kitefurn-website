@@ -1,6 +1,7 @@
 import React, { Component, createRef } from "react";
 import { CSSTransition } from "react-transition-group";
 import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 
 import dropArrow from "../media/icons/icons8-triangle-arrow-96.png";
 import homeIcon from "../media/icons/home-icon.png";
@@ -11,6 +12,7 @@ import PhoneButton from "./utils/phoneNumber";
 
 import "../styles/animations.css";
 import "../styles/header.css";
+import navIds from "./customInteriors/navIds";
 
 const content = {
   home: {
@@ -40,10 +42,11 @@ class Header extends Component {
         <div className="site-header">
           <div className="col-head-box header-padding">
             {/* Logo */}
-
             <Link to="/">
               <button className="btn btn-logo mx-2-5" />
             </Link>
+
+            {/* Main Navigation Buttons in the middle */}
             <div className="col-head header-left">
               <WrappedNav />
               <CollapsibleCustomMenu className="mx-2-5 header-button-base hover-flip">
@@ -129,7 +132,7 @@ class NavMenu extends Component {
     console.log(this.pathsList);
 
     let index;
-    if (window.location.href.indexOf("/customInteriors/#residence") !== -1) {
+    if (window.location.href.indexOf(navIds.residences) !== -1) {
       index = 1;
     } else if (window.location.href.indexOf("/customInteriors") !== -1) {
       // do nothing
@@ -151,7 +154,7 @@ class NavMenu extends Component {
     console.log(this.pathsList);
 
     let index;
-    if (window.location.href.indexOf("/customInteriors/#residence") !== -1) {
+    if (window.location.href.indexOf(navIds.residences) !== -1) {
       index = 1;
     } else if (window.location.href.indexOf("/customInteriors") !== -1) {
       // do nothing
@@ -184,8 +187,8 @@ class NavMenu extends Component {
           </button>
         </Link>
 
-        <a
-          href="/customInteriors/#residence"
+        <HashLink
+          to="/customInteriors#residence"
           className="resp-block"
           id="res-nav-btn-id"
         >
@@ -195,7 +198,7 @@ class NavMenu extends Component {
           >
             Residence Interiors
           </button>
-        </a>
+        </HashLink>
 
         <a href="http://www.kitekitchens.com/" className="resp-block">
           <button
@@ -224,22 +227,27 @@ class CollapsibleMenu extends Component {
     this.wrapperRef = createRef(null);
   }
 
-  // componentDidMount() {
-  //   window.addEventListener("click", (event) => {
-  //     if (
-  //       this.wrapperRef.current &&
-  //       !this.wrapperRef.current.contains(event.target)
-  //     ) {
-  //       this.setState({ inProp: false });
-  //     }
-  //   });
-  // }
+  componentDidMount() {
+    window.addEventListener("click", (event) => {
+      if (
+        (this.wrapperRef.current &&
+        !this.wrapperRef.current.contains(event.target))
+      ) {
+        this.setState({ inProp: false });
+      } 
+      
+      else if (event.srcElement.className.includes("top-btn-img-home") || event.srcElement.className.includes("btn-sub-nav") || (event.srcElement.className.includes("btn-nav") && !event.srcElement.className.includes("hover-flip"))) {
+        this.setState({ inProp: false })
+      }
+
+      // console.log(event.srcElement.className)
+    });
+  }
 
   render() {
     return (
-      <span className="coll-nav">
+      <span className="coll-nav" ref={this.wrapperRef}>
         <button
-          ref={this.wrapperRef}
           className="header-button-base menu-button"
           onClick={() => {
             this.setState({ inProp: !this.state.inProp });
@@ -296,25 +304,25 @@ class CustomMenu extends Component {
     this.wrapperRef = createRef(null);
   }
 
-  // componentDidMount() {
-  //   window.addEventListener("click", this.handleClickOutside);
-  // }
+  componentDidMount() {
+    window.addEventListener("click", this.handleClickOutside);
+  }
 
-  // componentWillUnmount() {
-  //   window.removeEventListener("click", this.handleClickOutside);
-  // }
+  componentWillUnmount() {
+    window.removeEventListener("click", this.handleClickOutside);
+  }
 
-  // handleClickOutside = (event) => {
-  //   if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
-  //     this.setState({
-  //       inProp: false,
-  //       classNames:
-  //         this.props.location?.pathname === "/customInteriors"
-  //           ? this.props.className + " btn-nav-active"
-  //           : this.props.className + " btn-nav-inactive",
-  //     });
-  //   }
-  // };
+  handleClickOutside = (event) => {
+    if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
+      this.setState({
+        inProp: false,
+        classNames:
+          this.props.location?.pathname === "/customInteriors"
+            ? this.props.className + " btn-nav-active"
+            : this.props.className + " btn-nav-inactive",
+      });
+    }
+  };
 
   switchIn = () => {
     this.setState({
@@ -340,7 +348,7 @@ class CustomMenu extends Component {
         >
           <div className="menu-drop-internal text-center">
             <div className="menu-drop-buttons-container">
-              <a href="/customInteriors/#hotels">
+              <HashLink to={navIds.hotels}>
                 <button
                   className="btn btn-light btn-sub-nav"
                   onClick={() => {
@@ -349,9 +357,9 @@ class CustomMenu extends Component {
                 >
                   Hotel Interiors
                 </button>
-              </a>
+              </HashLink>
 
-              <a href="/customInteriors/#eateries">
+              <HashLink to={navIds.eateries}>
                 <button
                   className="btn btn-light btn-sub-nav"
                   onClick={() => {
@@ -360,9 +368,9 @@ class CustomMenu extends Component {
                 >
                   Bakeries
                 </button>
-              </a>
+              </HashLink>
 
-              <a href="/customInteriors/#retails">
+              <HashLink to={navIds.retails}>
                 <button
                   className="btn btn-light btn-sub-nav"
                   onClick={() => {
@@ -371,9 +379,9 @@ class CustomMenu extends Component {
                 >
                   Departmentals Stores
                 </button>
-              </a>
+              </HashLink>
 
-              <a href="/customInteriors/#halls">
+              <HashLink to={navIds.halls}>
                 <button
                   className="btn btn-light btn-sub-nav"
                   onClick={() => {
@@ -382,9 +390,9 @@ class CustomMenu extends Component {
                 >
                   Banquet &#38; Meeting Halls
                 </button>
-              </a>
+              </HashLink>
 
-              <a href="/customInteriors/#offices">
+              <HashLink to={navIds.offices}>
                 <button
                   className="btn btn-light btn-sub-nav"
                   onClick={() => {
@@ -393,7 +401,7 @@ class CustomMenu extends Component {
                 >
                   Offices
                 </button>
-              </a>
+              </HashLink>
 
               <Link to="/customInteriors">
                 <button
@@ -412,6 +420,7 @@ class CustomMenu extends Component {
     );
   }
 }
+
 
 // const CollapsibleCustomMenu = withRouter(CustomMenu);
 const CollapsibleCustomMenu = CustomMenu;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { HashLink } from 'react-router-hash-link';
 import imgA from '../../media/images/customInteriors/glassStairs/A.jpg';
 import imgB from '../../media/images/customInteriors/glassStairs/B.png';
 
@@ -26,10 +26,13 @@ const content = {
         '\nThese rails can also be fitted to existing staircases.'
 }
 
-class GlassStairs extends Component{
+const navItemId = "stairs-nav";
+
+class Stairs extends Component{
     render(){
         return(
             <div className="fluid-container glassStairs-base" id="glass-stairs">
+        <div className="navsection" id={navItemId}></div>
                 <div className="glassStairsA">
                     <div>
                         <img className="glassStairs-img" src={imgA} alt={content.imgA.alt} />
@@ -75,11 +78,11 @@ class GlassStairs extends Component{
 
                         <div className="glassStairs-residenceBtnContainer gsA">
                             <div className="residenceExtraText">Take a look at more of our designs for <span>Residences</span></div>
-                            <a href="/customInteriors/#residence">
+                            <HashLink to="/customInteriors#residence">
                                 <button className="glassStairs-btn-toResidence">
                                     Residence Interiors
                                 </button>
-                            </a>
+                            </HashLink>
                         </div>
 
                     </div>
@@ -88,4 +91,4 @@ class GlassStairs extends Component{
         );
     }
 }
-export default GlassStairs;
+export {Stairs, navItemId};

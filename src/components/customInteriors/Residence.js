@@ -33,10 +33,13 @@ const content = {
   },
 };
 
+const navItemId = "residences-nav";
+
 class Residence extends Component {
   render() {
     return (
       <div className="fluid-container residences-base" id="residence">
+        <div className="navsection" id={navItemId}></div>
         <div className="residencesA">
           <div>
             <img src={imgA} alt={content.imgA.alt} />
@@ -89,7 +92,7 @@ class Residence extends Component {
           </div>
 
           {/* Button with a link to residence interiors */}
-          <div className="residence-residenceBtnContainer hide-1350">
+          {/* <div className="residence-residenceBtnContainer hide-1350">
             <div className="residence-btnExtraText">
               Take a look at more of our designs for <span>Residences</span>
             </div>
@@ -98,10 +101,10 @@ class Residence extends Component {
                 Residence Interiors
               </button>
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     );
   }
 }
-export default Residence;
+export {Residence, navItemId};
